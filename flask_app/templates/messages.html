@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style_main.css') }}">
+    <title>Fitventure - Messages</title>
+    <!-- Font Links -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700&family=Bellefair&family=Barlow:wght@400;700&display=swap"
+        rel="stylesheet">
+    <script type="text/javascript" src="{{ url_for('static', filename='js/nav.js') }}" defer></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js" defer></script> -->
+    <!-- <script type="text/javascript" src="{{ url_for('static', filename='js/chart1.js') }}" defer></script> -->
+
+</head>
+<body class="home">
+
+    <header class="primary-header flex">
+        <div>
+            <h1 class="logo fs-700 ff-sans-cond uppercase text-dark">Fit-venture</h1>
+        </div>
+        <div>
+            <h2 class=" fs-600 ff-sans-cond uppercase text-dark letter-spacing-2">Let's Start Up Some Convos , <span class="ff-sans-cond">{{user.first_name}}</span>  </h2>
+        </div>
+        <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false"><span class="sr-only"></span> </button>
+        <nav>
+            <ul id="primary-navigation" data-visible="false" class="primary-navigation flex underline-indicators">
+                <li>
+                    <a href=/dashboard class=" fs-400 ff-sans-cond uppercase text-dark letter-spacing-2 nav-links">
+                        <span aria-hidden="true"></span>Home
+                    </a>
+                </li>
+                <li class="active">
+                    <a href='/user/messages/{{user.id}}' class=" fs-400 ff-sans-cond uppercase text-dark letter-spacing-2 nav-links">
+                        <span aria-hidden="true"></span>Messages
+                    </a>
+                </li>
+                <li>
+                    <a href='/user/edit/{{user.id}}' class="fs-400 ff-sans-cond uppercase text-dark letter-spacing-2 nav-links">
+                        <span aria-hidden="true"></span>Account
+                    </a>
+                </li>
+                <li>
+                    <a href='/logout' class=" fs-400 ff-sans-cond uppercase text-dark letter-spacing-2 nav-links">
+                        <span aria-hidden="true"></span>Logout
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="grid-container">
+        <main class="grid-organizer">
+            <div class="ff-sans-cond" style="display: flex; justify-content: space-between;">
+                <h2 class=" fs-700 ff-sans-cond uppercase text-dark letter-spacing-2">Messages</h2>
+            </div>
+            <div class="card">
+                <div class="fs-500 ff-sans-cond">
+                    <h3 class="">{{messages|length}} Message(s) For You:</h3>
+                    {% for message in messages %}
+                        <p> <h3>{{message.sender}}</h3> said {{message.time_span()}}:</p>
+                        <p>"{{message.content}}"</p>
+                        <button class="td-button" style="text-decoration: underline;"><a href="/delete/message/{{message.id}}" role="button">Delete ?</a></button>
+                        <br>
+                        <br>
+                    {% endfor %}
+                </div>
+            </div>
+            <h2 class="fs-700 ff-sans-cond uppercase text-dark letter-spacing-2" style="margin-top: 3rem;">Send A Message</h2>
+            <div class="card" style="height: 60vh;">
+                {% for user in users %}
+                {% if user.id != session.user_id %}
+                <form style="margin-left: 3rem ;"  action="/create_message" method="post" class="ff-sans-cond fs-500">
+                        <input type="hidden" name="sender_id" value="{{session.user_id}}">
+                        <input type="hidden" name="receiver_id" value="{{user.id}}">
+                        <div class="input-box">
+                            <h3>
+                                <label for="receiver_id" class="fs-500 ff-sans-cond">Message {{user.first_name}} {{user.last_name}} :</label>
+                            </h3>
+                            <br>
+                            <textarea name="content" id="" cols="30" rows="10" style="resize:horizontal;"></textarea>
+                            <div>
+                                <button class="td-button" type="submit">Send</button>
+                            </div>
+                        </div>
+                </form>
+                {% endif %}
+                {% endfor %}
+                </div>
+            </div>
+
+            </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

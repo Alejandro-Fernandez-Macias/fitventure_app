@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style_main.css') }}">
+    <title>Fitventure - View Workout</title>
+    <!-- Font Links -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700&family=Bellefair&family=Barlow:wght@400;700&display=swap"
+        rel="stylesheet">
+    <script type="text/javascript" src="{{ url_for('static', filename='js/nav.js') }}" defer></script>
+
+</head>
+<body class="home">
+
+    <header class="primary-header flex">
+        <div>
+            <h1 class="logo fs-700 ff-sans-cond uppercase text-dark">Fit-venture</h1>
+        </div>
+        <div>
+            <h2 class=" fs-600 ff-sans-cond uppercase text-dark letter-spacing-2">Let's Get More Insight , <span class="ff-sans-cond">{{user.first_name}}</span>  </h2>
+        </div>
+        <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false"><span class="sr-only"></span> </button>
+        <nav>
+            <ul id="primary-navigation" data-visible="false" class="primary-navigation flex underline-indicators">
+                <li>
+                    <a href='/dashboard' class=" fs-400 ff-sans-cond uppercase text-dark letter-spacing-2 nav-links">
+                        <span aria-hidden="true"></span>Home
+                    </a>
+                </li>
+                <li>
+                    <a href='/user/messages/{{user.id}}' class=" fs-400 ff-sans-cond uppercase text-dark letter-spacing-2 nav-links">
+                        <span aria-hidden="true"></span>Messages
+                    </a>
+                </li>
+                <li>
+                    <a href='/user/edit/{{user.id}}' class="fs-400 ff-sans-cond uppercase text-dark letter-spacing-2 nav-links">
+                        <span aria-hidden="true"></span>Account
+                    </a>
+                </li>
+                <li>
+                    <a href='/logout' class=" fs-400 ff-sans-cond uppercase text-dark letter-spacing-2 nav-links">
+                        <span aria-hidden="true"></span>Logout
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main class="grid-container">
+        <div class="container ff-sans-cond" style="margin-top: -rem;">
+            <div class="card" style="height: 70vh;">
+                <h2 class=" fs-700 ff-sans-cond uppercase text-dark letter-spacing-2">Workout Details</h2>
+                <div class="user-details fs-500 ff-sans-cond">
+                <h3>Name:</h3>
+                    <p>{{workout.name}}</p>
+                <h3>Length: </h3>
+                    <p>{{workout.length}}</p>
+                <h3>Type: </h3>
+                    <p>{{workout.type}}</p>
+                <h3>Submitted By: </h3>
+                    <p>{{workout.creator.first_name}}   {{workout.creator.last_name}}</p>
+                <h3>Instructions: </h3>
+                    <p>{{workout.instructions}}</p>
+                </div>
+            </div>
+            {% if workout.user_id == session.user_id%}
+            <div class="ff-sans-cond fs-600" style="display: flex; justify-content: space-between; width: 30.5rem;">
+                <button class="td-button" type="button"><a href="/workout/edit/{{workout.id}}">Edit</a></button>
+                <button class="td-button" type="button"><a href="/workout/delete/{{workout.id}}">Delete</a></button>
+            </div>
+            {% endif %}
+        </div>
+    </main>
+</body>
+</html>

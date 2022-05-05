@@ -1,0 +1,429 @@
+/* Custom Props */
+
+:root {
+    --clr-dark: hsl(230 35 7%);
+    --clr-light: 231 77% 90% ;
+    --clr-white: 0 0% 100%;
+
+    /* font-sizing */
+    --fs-900: 9.375rem;
+    --fs-800: 6.25rem;
+    --fs-700: 3.5rem;
+    --fs-600: 2rem;
+    --fs-500: 1.75rem;
+    --fs-400: 1.125rem;
+    --fs-300: 1rem;
+    --fs-200: 0.875rem;
+
+    /* font-families */
+    --ff-serif: "Bellefair", serif;
+    --ff-sans-cond: "Barlow Condensed", sans-serif;
+    --ff-sans-normal: "Barlow", sans-serif;
+}
+
+@media (min-width: 35em) {
+    :root {
+        --fs-800: 5rem;
+        --fs-700: 2.5rem;
+        --fs-600: 1.5rem;
+        --fs-400: 1rem;
+    }
+}
+
+@media (min-width: 45em) {
+    :root {
+        --fs-800: 6.25rem;
+        --fs-700: 3.5rem;
+        --fs-600: 2rem;
+        --fs-400: 1.25rem;
+    }
+}
+
+/* https://piccalil.li/blog/a-modern-css-reset/ */
+
+/* Box size */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* Margin Reset */
+body, h1, h2, h3, h4, h5, p, figure, picture {
+    margin: 0;
+}
+
+body {
+    line-height: 1.5;
+    min-height: 100vh;
+    background: url("assets/concrete-bg.jpg");
+    overflow-x: hidden;
+    line-height: 1.5;
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: min-content 1fr;
+}
+
+/* Image sizing */
+img, picture {
+    max-width: 100%;
+    display: block;
+}
+
+/* Form elements */
+input, button, textarea, select {
+    font: inherit;
+}
+
+/* remove animations  , if toggled off */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+    }
+}
+
+/* Utility Classes */
+
+.flex {
+    display: flex;
+    gap: var(--gap, 3rem);
+}
+
+.grid {
+    display: grid;
+    gap: var(--gap, 1rem);
+}
+
+.container {
+    padding-inline: 2em;
+    max-width: 80rem;
+    margin-inline: auto;
+}
+
+/* color properties */
+.bg-dark { background-color: hsl( var(--clr-dark)); }
+.bg-light { background-color: hsl( var(--clr-light)); }
+.bg-white { background-color: hsl( var(--clr-white)); }
+
+.text-dark { color: hsl( var(--clr-dark)); }
+.text-light { color: hsl( var(--clr-light)); }
+.text-white { color: hsl( var(--clr-white)); }
+
+/* Typography */
+
+.ff-serif { font-family: var(--ff-serif); }
+.ff-sans-cond { font-family: var(--ff-sans-cond); }
+.ff-sans-normal { font-family: var(--ff-sans-normal); }
+
+.letter-spacing-1 { letter-spacing: 4.75px; }
+.letter-spacing-2 { letter-spacing: 2.7px; }
+.letter-spacing-3 { letter-spacing: 2.35px; }
+
+.uppercase { text-transform: uppercase; }
+
+.fs-900 { font-size: var(--fs-900); }
+.fs-800 { font-size: var(--fs-800); }
+.fs-700 { font-size: var(--fs-700); }
+.fs-600 { font-size: var(--fs-600); }
+.fs-500 { font-size: var(--fs-500); }
+.fs-400 { font-size: var(--fs-400); }
+.fs-300 { font-size: var(--fs-300); }
+.fs-200 { font-size: var(--fs-200); }
+
+.fs-900,
+.fs-800,
+.fs-700,
+.fs-600 {
+    line-height: 1.1;
+}
+
+.logo {
+    margin: 2rem;
+}
+
+/* Navigation */
+
+.primary-header {
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mobile-nav-toggle {
+    display: none;
+}
+
+.primary-navigation, form, .card {
+    /* --underline-gap: 2rem; */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background: hsl(0 0% 0% / 0.1);
+    backdrop-filter: blur(0.40rem);
+}
+
+.nav-links:hover {
+    font-weight: bold;
+}
+
+@supports (backdrop-filter: blur(1rem)) {
+    .primary-navigation {
+        background: hsl(0% 0 100% / 0.1);
+        backdrop-filter: blur(1rem);
+    }
+}
+
+.primary-navigation  a {
+    text-decoration: none;
+}
+
+.primary-navigation a > [aria-hidden="true"] {
+    font-weight: 700;
+    margin-inline-end: 0.75em;
+
+}
+
+@media (max-width: 35em) {
+    .primary-navigation {
+        --gap: clamp(1.5rem, 5vw, 3rem);
+        position: fixed;
+        z-index: 1000;
+        inset: 0 0 0 30%;
+        flex-direction: column;
+        padding: min(30vh, 10rem) 2rem;
+        transform: translateX(100%);
+        transition: transform 350ms ease-out;
+    }
+
+    .primary-navigation[data-visible='true'] {
+        transform: translateX(0%);
+    }
+
+    .primary-navigation.underline-indicators > .active {
+        border: 0;
+    }
+    .mobile-nav-toggle {
+        display: block;
+        position:  absolute;
+        z-index: 9999;
+        background-color: transparent;
+        background-image: url("assets/shared/icon-menu.svg");
+        background-repeat: no-repeat;
+        border: 0;
+        width:  2rem;
+        aspect-ratio: 1;
+        top: 2rem;
+        right: 2rem;
+}
+
+    .mobile-nav-toggle[aria-expanded ='true'] {
+        background-image: url("assets/shared/x-icon.svg");
+}
+
+    .mobile-nav-toggle:focus-visible {
+        outline: 5px solid white;
+        outline-offset: 5px;
+    }
+}
+
+.underline-indicators > * {
+    cursor: pointer;
+    padding: var(--underline-gap, 1rem) 0;
+    border:  0;
+    border-bottom: .2rem solid hsl(var(--clr-white) / 0);
+}
+
+.underline-indicators > *:hover, .underline-indicators > *:focus {
+    border-color: hsl( var(--clr-dark) / .25);
+}
+
+.underline-indicators > .active, .underline-indicators > [aria-selected="true"] {
+    color:  hsl(var(--clr-dark) / 1);
+    border-color: hsl(var(--clr-dark) / 1);
+}
+
+@media (min-width: 35em) and (max-width: 55em) {
+    .primary-navigation a > span[aria-hidden] {
+        display: none;
+    }
+}
+
+@media (min-width: 35em) {
+    .primary-navigation {
+        padding-block: 2rem;
+        padding-inline: clamp(3rem, 8vw, 10rem);
+    }
+}
+
+/* Background */
+
+body {
+    background-size: cover ;
+    background-position: center;
+}
+
+/* form */
+.container {
+    display: flex;
+    height: 100vh;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    max-width: 35rem;
+    width: 100%;
+    /* background: red; */
+}
+
+form {
+    padding: 8rem;
+    max-width: 60rem;
+}
+
+.user-details {
+    padding: 5rem 0;
+}
+
+.user-details .input-box input {
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    transition: all 0.3s ease;
+}
+
+.user-details .input-box input:focus,
+.user-details .input-box input:valid {
+    border-color: black;
+}
+
+form .button input {
+    height: 100%;
+    width: 100%;
+    margin-top: 2em;
+    outline: none;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    background: #ccc;
+}
+
+form .button input:hover {
+    background: grey;
+    cursor: pointer;
+}
+
+/* Main body of application */
+
+.grid-col-span-2 {
+    grid-column: span-2;
+}
+
+.grid-organizer {
+    display: grid;
+    gap: 1.5rem;
+    padding-block: 2rem;
+    width: min(95%, 70rem);
+    margin-inline: auto;
+}
+
+@media (min-width : 50em) {
+    .grid-organizer {
+        grid-template-columns: 2;
+    }
+    .card:last-child {
+        /* background: blue !important; */
+        grid-column-start: 2;
+        grid-column-end: 1 / span 2;
+    }
+}
+
+.card {
+    height: 40vh;
+    margin-top: 2rem;
+    font-size: var(--fs-400);
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 2.5rem 3.75rem 3rem;
+    overflow: auto;
+}
+
+.card:last-child {
+    /* background: blue !important; */
+    grid-column-start: 1;
+    /* grid-column-end: ; */
+}
+
+/* Table Dashboard*/
+
+.card thead th {
+    position: sticky;
+    top: -1.99rem;
+    background-color: black;
+}
+
+table {
+    border-collapse: collapse;
+    position: relative;
+    margin-left: 0rem;
+}
+
+th,td {
+    border-bottom: 1px solid #dddddd;
+    border: 1px solid #dddddd;
+    padding: 1rem 2.4rem;
+}
+
+::-webkit-scrollbar {
+    width: 1rem;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 1rem rgba(0, 0, 0, 0.3)
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 1rem rgba(0, 0, 0, 0.3)
+}
+
+tr:hover td {
+    color: #fff;
+    cursor: pointer;
+}
+
+.td-button {
+    border: none;
+    padding: 0.25rem;
+    border-radius: 0.5rem;
+    background: #cccc;
+    color: hsl( var(--clr-dark));
+}
+
+a {
+    text-decoration: none;
+    color: hsl( var(--clr-dark));
+}
+
+.td-button:hover {
+    background: grey;
+}
+
+/* Chart Information */
+
+.charts {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-gap: 20px;
+    width: 100%;
+    padding: 5rem;
+    padding-top: 0;
+}
+
+.chart {
+    background: silver;
+    padding: 5rem;
+    border-radius: 1rem;
+    box-shadow: 0 1rem 3rem;
+    width: 100%;
+}
